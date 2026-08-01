@@ -128,7 +128,7 @@
   }
 
   /* ---------- CHAT PANEL ---------- */
-  /* contain scroll inside the chat so new messages don't jolt the page */
+  /* fixed-height chat: messages scroll inside, box never grows */
   .chat-frame {
     border: 1px solid var(--edge);
     border-radius: 4px;
@@ -140,10 +140,23 @@
       0 30px 60px -20px rgba(0,0,0,0.8),
       inset 0 0 60px rgba(0,0,0,0.5);
     padding: 10px;
+    height: 640px;
     overflow: hidden;
-    scroll-margin-top: 100vh;
   }
   #n8n-chat {
+    height: 100%;
+    overflow: hidden;
+  }
+  /* the widget's inner layout fills the fixed frame */
+  #n8n-chat .chat-layout,
+  #n8n-chat [class*="layout"] {
+    height: 100% !important;
+    max-height: 100% !important;
+  }
+  /* only the message list scrolls */
+  #n8n-chat .chat-messages-list,
+  #n8n-chat [class*="messages"] {
+    overflow-y: auto !important;
     overflow-anchor: none;
   }
 
@@ -167,7 +180,7 @@
     --chat--transition-duration: 0.2s;
 
     --chat--window--width: 100%;
-    --chat--window--height: 620px;
+    --chat--window--height: 100%;
 
     --chat--header--background: #1d150d;
     --chat--header--color: var(--torch-hot);
